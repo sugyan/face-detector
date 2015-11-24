@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ruby-opencv (0.0.14)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ruby-opencv (~> 0.0.14)
+
+BUNDLED WITH
+   1.10.6
