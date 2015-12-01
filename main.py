@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
 import cv2
 import numpy as np
@@ -27,4 +27,4 @@ def api():
 
 @app.route('/')
 def main():
-    return 'OK'
+    return render_template('index.html')
