@@ -1,0 +1,7 @@
+*
+!requirements.txt
+!main.py
+!detector.py
+!node_modules
+!static
+!templates
