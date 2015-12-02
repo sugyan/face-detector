@@ -8,4 +8,8 @@ gulp.task('build', function() {
         .pipe(gulp.dest('static/js'));
 });
 
+gulp.task('watch', function() {
+    gulp.watch('src/js/*.js', ['build']);
+});
+
 gulp.task('default', ['build']);

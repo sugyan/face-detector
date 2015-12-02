@@ -21,15 +21,16 @@
           <div class="text-center">
             <canvas id="canvas" width="512" height="512" style="border: 1px lightgray solid;"></canvas>
           </div>
-          <form id="url" class="form-inline pull-right">
+          <form id="url" class="well">
             <div class="form-group">
               <input type="url" name="image_url" class="form-control" style="" placeholder="Image URL ...">
             </div>
-            <button type="submit" class="btn btn-info">Load</button>
+            <input type="submit" class="btn btn-info">
           </form>
         </div>
         <div class="col-xs-6 col-sm-4 well">
-          <pre>
+          <p>response:</p>
+          <pre id="response">
           </pre>
         </div>
       </div>

@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, render_template
 import cv2
 import numpy as np
 import urllib
-import detector
+from lib import detector
 
 app = Flask(__name__)
 app.debug = True
