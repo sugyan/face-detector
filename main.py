@@ -23,7 +23,7 @@ def api():
         return jsonify(error='read image failed.')
 
     faces = detector.detect(img)
-    return jsonify(faces=faces)
+    return jsonify(faces=faces, url=url)
 
 @app.route('/')
 def main():

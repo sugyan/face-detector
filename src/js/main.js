@@ -1,12 +1,14 @@
 /* global $ */
 class Main {
-    constructor(canvas, output) {
+    constructor(canvas, output, message) {
         this.output = $(output);
+        this.message = $(message);
         this.width  = canvas.width;
         this.height = canvas.height;
         this.ctx = canvas.getContext('2d');
     }
     load(url) {
+        window.clearInterval(this.interval);
         const img = new Image();
         img.onload = () => {
             const scale = Math.max(img.width  / this.width, img.height / this.height);
@@ -18,12 +20,21 @@ class Main {
             this.ctx.fillRect(0, 0, this.width, this.height);
             this.ctx.drawImage(img, offset_x, offset_y, w, h);
             this.output.text('');
+            this.message.text('.');
+            this.interval = window.setInterval(() => {
+                this.message.text(this.message.text() + '.');
+            }, 500);
             $.ajax({
                 url: '/api',
                 data: {
                     url: url
                 },
                 success: (result) => {
+                    window.clearInterval(this.interval);
+                    if (result.url != this.url) {
+                        return;
+                    }
+                    this.message.text(result.faces.length + ' faces detected');
                     this.output.text(JSON.stringify(result, null, '  '));
                     result.faces.forEach((face) => {
                         const center = {
@@ -62,7 +73,10 @@ class Main {
                 }
             });
         };
-        img.src = url;
+        img.onerror = () => {
+            this.message.text('error!');
+        };
+        img.src = this.url = url;
     }
     rotate(target, center, rad) {
         return {
@@ -75,7 +89,8 @@ class Main {
 $(() => {
     const main = new Main(
         document.getElementById('canvas'),
-        document.getElementById('response')
+        document.getElementById('response'),
+        document.getElementById('message')
     );
     $('#url').submit(() => {
         const url = $('input[name="image_url"]').val();
