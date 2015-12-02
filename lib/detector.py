@@ -42,7 +42,6 @@ def detect(img):
             roi = rotated[y : y + h, x : x + w]
             eyes = cascade_e.detectMultiScale(roi)
             eyes = filter(lambda e: (e[0] > w / 2 or e[0] + e[2] < w / 2) and e[1] + e[3] < h / 2, eyes)
-            print len(eyes)
             if len(eyes) == 2 and abs(eyes[0][0] - eyes[1][0]) > w / 4:
                 score = abs(math.atan2(eyes[1][1] - eyes[0][1], eyes[1][0] - eyes[0][0]))
                 if eyes[0][1] == eyes[1][1]:
