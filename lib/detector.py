@@ -39,7 +39,7 @@ def detect(img):
         for face in faces:
             x, y, w, h = face
             # eyes in face?
-            y_offset = int(h * 0.15)
+            y_offset = int(h * 0.1)
             roi = rotated[y + y_offset: y + h, x: x + w]
             eyes = cascade_e.detectMultiScale(roi, 1.05)
             eyes = filter(lambda e: (e[0] > w / 2 or e[0] + e[2] < w / 2) and e[1] + e[3] < h / 2, eyes)
