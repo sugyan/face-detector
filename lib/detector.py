@@ -39,18 +39,19 @@ def detect(img):
         for face in faces:
             x, y, w, h = face
             # eyes in face?
-            roi = rotated[y : y + h, x : x + w]
-            eyes = cascade_e.detectMultiScale(roi)
+            y_offset = int(h * 0.15)
+            roi = rotated[y + y_offset: y + h, x: x + w]
+            eyes = cascade_e.detectMultiScale(roi, 1.05)
             eyes = filter(lambda e: (e[0] > w / 2 or e[0] + e[2] < w / 2) and e[1] + e[3] < h / 2, eyes)
             if len(eyes) == 2 and abs(eyes[0][0] - eyes[1][0]) > w / 4:
-                score = abs(math.atan2(eyes[1][1] - eyes[0][1], eyes[1][0] - eyes[0][0]))
+                score = math.atan2(abs(eyes[1][1] - eyes[0][1]), abs(eyes[1][0] - eyes[0][0]))
                 if eyes[0][1] == eyes[1][1]:
                     score = 0.0
                 results.append({
-                    'center': translate([face[0] + face[2] * 0.5, face[1] + face[3] * 0.5], -deg),
-                    'w': float(face[2]) / float(cols) * 100.0,
-                    'h': float(face[3]) / float(rows) * 100.0,
-                    'eyes': [translate([face[0] + e[0] + e[2] * 0.5, face[1] + e[1] + e[3] * 0.5], -deg) for e in eyes],
+                    'center': translate([x + w * 0.5, y + h * 0.5], -deg),
+                    'w': float(w) / float(cols) * 100.0,
+                    'h': float(h) / float(rows) * 100.0,
+                    'eyes': [translate([x + e[0] + e[2] * 0.5, y + y_offset + e[1] + e[3] * 0.5], -deg) for e in eyes],
                     'score': score,
                 })
     # unify duplicate faces
@@ -65,6 +66,7 @@ def detect(img):
                 exists = True
                 if result['score'] < face['score']:
                     faces[i] = result
+                    break
         if not exists:
             faces.append(result)
     for face in faces:
