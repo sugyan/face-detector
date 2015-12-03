@@ -31,7 +31,7 @@ def detect(img):
         }
     # rotate and detect faces
     results = []
-    for deg in range(-60, 61, 5):
+    for deg in range(-48, 49, 6):
         M = cv2.getRotationMatrix2D((hypot * 0.5, hypot * 0.5), deg, 1.0)
         rotated = cv2.warpAffine(frame, M, (hypot, hypot))
         faces = cascade_f.detectMultiScale(rotated, 1.08, 2)

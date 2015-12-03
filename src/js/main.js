@@ -62,7 +62,7 @@ class Main {
                             this.ctx.arc(
                                 offset_x + eye.x * w / 100.0,
                                 offset_y + eye.y * h / 100.0,
-                                (face.w + face.h) / 10.0,
+                                (w * face.w + h * face.h) / 2000.0,
                                 0.0, Math.PI * 2.0
                             );
                             this.ctx.lineWidth = 2;
