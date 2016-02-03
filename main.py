@@ -22,8 +22,8 @@ def api():
     if img is None:
         return jsonify(error='read image failed.')
 
-    faces = detector.detect(img)
-    return jsonify(faces=faces, url=url)
+    faces, image = detector.detect(img)
+    return jsonify(faces=faces, image=image, url=url)
 
 @app.route('/')
 def main():

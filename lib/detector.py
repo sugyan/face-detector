@@ -11,10 +11,10 @@ def detect(img):
     cascade_f = cv2.CascadeClassifier(path.join(cascades_dir, 'haarcascade_frontalface_alt2.xml'))
     cascade_e = cv2.CascadeClassifier(path.join(cascades_dir, 'haarcascade_eye.xml'))
     # resize if learch image
-    rows, cols, _ = img.shape
-    if max(rows, cols) > max_size:
-        l = max(rows, cols)
-        img = cv2.resize(img, (cols * max_size / l, rows * max_size / l))
+    shape = img.shape
+    if max(shape[0], shape[1]) > max_size:
+        l = max(shape[0], shape[1])
+        img = cv2.resize(img, (shape[1] * max_size / l, shape[0] * max_size / l))
     rows, cols, _ = img.shape
     # create gray image for rotate
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -71,4 +71,4 @@ def detect(img):
             faces.append(result)
     for face in faces:
         del face['score']
-    return faces
+    return faces, { 'height': shape[0], 'width': shape[1] }
